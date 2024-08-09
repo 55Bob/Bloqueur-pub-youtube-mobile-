@@ -1,0 +1,28 @@
+// ==UserScript==
+// @name         YouTube Ad Blocker
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  Bloque les publicités sur YouTube mobile
+// @author       Votre Nom
+// @match        *://m.youtube.com/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Observer pour les changements dans la page
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.addedNodes.length) {
+                var playerAds = document.querySelector('.video-ads, .ytp-ad-module');
+                if (playerAds) {
+                    playerAds.style.display = 'none'; // Cache les publicités
+                }
+            }
+        });
+    });
+
+    // Lancer l'observateur
+    observer.observe(document.body, { childList: true, subtree: true });
+})();
